@@ -1,0 +1,28 @@
+package com.company;
+
+import java.util.Scanner;                         //  A basic programme where fight is between you and me, it's out of 100 points of health.
+
+public class Fightgame {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("ME VS YOU");
+        System.out.println("Enter your fight move");
+        String[] move= {"Break Jaw","Kick in nuts"};
+        String input= sc.nextLine();
+        System.out.println(input);
+        int myhealth=100;
+        int yourhealth=100;
+        if (input.equalsIgnoreCase(move[0])){
+            System.out.println("You broke my jaw, awww!!!");
+
+            yourhealth= yourhealth- 60;
+            System.out.println("my health is= " + yourhealth);
+        }
+        else if (input.equalsIgnoreCase(move[1])){
+            System.out.println("You think you a pro, haa?");
+           yourhealth= yourhealth- 10;
+            System.out.println("my health is= " + yourhealth);
+        }
+        //System.out.println(yourhealth);
+    }
+}
