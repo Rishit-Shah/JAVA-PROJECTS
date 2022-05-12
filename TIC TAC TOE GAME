@@ -1,0 +1,142 @@
+package com.company;
+
+import java.util.*;
+
+public class Main {
+    static ArrayList<Integer> playerposiotion = new ArrayList<Integer>();
+    static ArrayList<Integer> cpuposiotion = new ArrayList<Integer>();
+
+    public static void main(String[] args) {
+        char[][] gameboard= {{' ', '|', ' ', '|', ' '},
+                {'-', '-', '-', '-', '-'},
+                {' ', '|', ' ', '|', ' '},
+                {'-', '-', '-', '-', '-'},
+                {' ', '|', ' ', '|', ' '}
+        };
+        printboardgame(gameboard);
+
+        while (true){
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Enter the block number: (1-9)");
+            int pos = sc.nextInt();
+            System.out.println(pos);
+            while (playerposiotion.contains(pos)|| cpuposiotion.contains(playerposiotion)){
+                System.out.println("Numbers taken!!, choose another one");
+                pos = sc.nextInt();
+            }
+
+
+
+            placepiece(gameboard, pos, "player");
+            Random random= new Random();
+            int cpupos= random.nextInt(9)+ 1;
+            while (playerposiotion.contains(cpupos)|| cpuposiotion.contains(cpupos)) {
+
+                 cpupos= random.nextInt(9)+ 1;
+            }
+
+
+
+            placepiece(gameboard, cpupos, "cpu");
+            printboardgame(gameboard);
+           String result= checkwinner();
+            System.out.println(result);
+
+        }
+    }
+    public static void printboardgame(char[][] gameboard){
+
+        for (char[] row: gameboard){
+            for (char c: row){
+                System.out.print(c);
+            }
+            System.out.println();
+        }
+    }
+    public static void placepiece(char [] [] gameboard, int pos, String user){
+        char symbol= ' ';
+
+        if (user.equals("player")){
+            symbol= 'X';
+            playerposiotion.add(pos);
+        }
+        else if (user.equals("cpu")){
+            symbol='O';
+            cpuposiotion.add(pos);
+        }
+
+
+        switch (pos){
+            case 1:
+                gameboard[0] [0]= symbol;
+                break;
+            case 2:
+                gameboard[0] [2]= symbol;
+                break;
+            case 3:
+                gameboard[0] [4]= symbol;
+                break;
+            case 4:
+                gameboard[2] [0]= symbol;
+                break;
+            case 5:
+                gameboard[2] [2]=  symbol;
+                break;
+            case 6:
+                gameboard[2] [4]=  symbol;
+                break;
+            case 7:
+                gameboard[4] [0]= symbol;
+                break;
+            case 8:
+                gameboard[4] [2]=  symbol;
+                break;
+            case 9:
+                gameboard[4] [4]= symbol;
+                break;
+            default:
+                break;
+        }
+
+    }
+    public static String checkwinner(){
+
+
+        List toprow= Arrays.asList(1,2,3);
+        List midrow= Arrays.asList(4,5,6);
+        List lastrow= Arrays.asList(7,8,9);
+        List firstcolumn= Arrays.asList(1,4,7);
+        List midcolumn= Arrays.asList(2,5,8);
+        List rightcolumn= Arrays.asList(3,6,9);
+        List cross1= Arrays.asList(1,5,9);
+        List cross2= Arrays.asList(7,5,3);
+
+        List<List> winning = new ArrayList<List>();
+        winning.add(toprow);
+        winning.add(midrow);
+        winning.add(lastrow);
+        winning.add(firstcolumn);
+        winning.add(midcolumn);
+        winning.add(rightcolumn);
+        winning.add(cross1);
+        winning.add(cross2);
+        for (List l : winning){
+            if (playerposiotion.containsAll(l)){
+                return"Congratulations you won";
+            }else if (cpuposiotion.containsAll(l)) {
+
+
+                return "Cpu wins! sorry";
+            }else if (playerposiotion.size()+ cpuposiotion.size() ==9){
+                return "CAT";
+            }
+
+        }
+
+        return "";
+
+
+
+    }
+}
+
